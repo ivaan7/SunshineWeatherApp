@@ -243,4 +243,11 @@ public class Utility {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getInt(context.getString(R.string.prefLocationStatusKey),WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
     }
+
+    public static void resetLocationStatus(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(context.getString(R.string.prefLocationStatusKey),WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
+        editor.apply();
+    }
 }

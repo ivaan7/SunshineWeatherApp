@@ -2,6 +2,7 @@ package com.example.android.sunshine.app;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -10,8 +11,11 @@ import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.sync.WeatherSyncAdapter;
+
 public class SettingsActivity extends PreferenceActivity
-        implements Preference.OnPreferenceChangeListener {
+        implements Preference.OnPreferenceChangeListener,SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,10 +66,27 @@ public class SettingsActivity extends PreferenceActivity
         return true;
     }
 
+    //this gets called after preference is changed, detecting which preference is changed
+    //this is important because data sync starts here
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if (key.equals("location")){
+            //clearing location status and syncing data
+            Utility.resetLocationStatus(this);
+            WeatherSyncAdapter.syncImmediately(this);
+        }else if (key.equals("units")){
+            //units have changed, update lists of weather entries accordingly
+            getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI,null);
+        }
+
+    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public Intent getParentActivityIntent() {
         return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
+
+
 }
