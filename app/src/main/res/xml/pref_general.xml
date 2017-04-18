@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="10000"
+        android:inputType="text"
+        android:key="@string/location_pref_key"
+        android:singleLine="true"
+        android:title="@string/location_title_preferences" />
+    <ListPreference
+        android:title="@string/units_preference_title"
+        android:key="@string/units_pref_key"
+        android:defaultValue="@string/units_default_value"
+        android:entryValues="@array/unit_values"
+        android:entries="@array/unit_options"
+        />
+    <CheckBoxPreference
+        android:title="@string/pref_enable_notifications_label"
+        android:key="@string/pref_enable_notifications_key"
+        android:summaryOff="@string/pref_enable_notifications_false"
+        android:summaryOn="@string/pref_enable_notifications_true"
+        android:defaultValue="@string/pref_enable_notifications_default" />
+</PreferenceScreen>
