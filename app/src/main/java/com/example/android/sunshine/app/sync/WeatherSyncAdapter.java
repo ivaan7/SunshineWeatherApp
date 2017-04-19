@@ -564,9 +564,12 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
 
                     //build notification
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                            .setColor(resources.getColor(R.color.primary_light))
                             .setSmallIcon(iconId)
                             .setContentTitle(title)
                             .setContentText(contentText);
+
+
 
                     //handle click on notification
 
