@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class ForecastAdapter extends CursorAdapter {
 
     private final int VIEW_TYPE_TODAY = 0;
@@ -16,6 +18,7 @@ public class ForecastAdapter extends CursorAdapter {
 
     // Flag to determine if we want to use a separate view for "today".
     private boolean mUseTodayLayout = true;
+
 
     public ForecastAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -71,21 +74,26 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
+        int fallbackIconId;
         int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
         int viewType = getItemViewType(cursor.getPosition());
         switch (viewType) {
             case VIEW_TYPE_TODAY:
-                viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+                fallbackIconId = Utility.getArtResourceForWeatherCondition(weatherId);
                 break;
-            case VIEW_TYPE_FUTURE_DAY:
-                viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
+            default:
+                fallbackIconId = Utility.getIconResourceForWeatherCondition(weatherId);
                 break;
         }
 
-        // TODO Read date from cursor
+        Glide.with(mContext)
+                .load(Utility.getArtUrlForWeatherCondition(mContext, weatherId))
+                .error(fallbackIconId)
+                .crossFade()
+                .into(viewHolder.iconView);
+
         long dateInMilis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, dateInMilis));
-        // TODO Read weather forecast from cursor
 
         String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
         viewHolder.descriptionView.setText(description);

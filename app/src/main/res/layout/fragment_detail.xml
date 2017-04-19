@@ -19,6 +19,7 @@
             android:fontFamily="sans-serif-condensed"
             android:text="Tomorrow"
             android:textColor="@color/black"
+            android:adjustViewBounds="true"
             android:textSize="24sp" />
 
         <TextView

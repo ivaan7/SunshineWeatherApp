@@ -12,6 +12,7 @@ import com.example.android.sunshine.app.sync.WeatherSyncAdapter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utility {
     public static String getPreferredLocation(Context context) {
@@ -227,6 +228,47 @@ public class Utility {
         return -1;
     }
 
+    /**
+     * Helper method to provide the art urls according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     *
+     * @param context   Context to use for retrieving the URL format
+     * @param weatherId from OpenWeatherMap API response
+     * @return url for the corresponding weather artwork. null if no relation is found.
+     */
+    public static String getArtUrlForWeatherCondition(Context context, int weatherId) {
+        // Based on weather code data found at:
+        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String formatArtUrl = prefs.getString(context.getString(R.string.pref_art_pack_key),
+                context.getString(R.string.pref_art_pack_sunshine));
+        if (weatherId >= 200 && weatherId <= 232) {
+            return String.format(Locale.US, formatArtUrl, "storm");
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return String.format(Locale.US, formatArtUrl, "light_rain");
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return String.format(Locale.US, formatArtUrl, "rain");
+        } else if (weatherId == 511) {
+            return String.format(Locale.US, formatArtUrl, "snow");
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return String.format(Locale.US, formatArtUrl, "rain");
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return String.format(Locale.US, formatArtUrl, "snow");
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return String.format(Locale.US, formatArtUrl, "fog");
+        } else if (weatherId == 761 || weatherId == 781) {
+            return String.format(Locale.US, formatArtUrl, "storm");
+        } else if (weatherId == 800) {
+            return String.format(Locale.US, formatArtUrl, "clear");
+        } else if (weatherId == 801) {
+            return String.format(Locale.US, formatArtUrl, "light_clouds");
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return String.format(Locale.US, formatArtUrl, "clouds");
+        }
+        return null;
+    }
+
     public static boolean isNetworkAvaiable(Context context) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -238,16 +280,17 @@ public class Utility {
 
     //helper method to get last server status from preferences
     @SuppressWarnings({"Resource Type", "WrongConstant"})
-    public static @WeatherSyncAdapter.LocationStatus
-    int getLocationStatus(Context context){
+    public static
+    @WeatherSyncAdapter.LocationStatus
+    int getLocationStatus(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(context.getString(R.string.prefLocationStatusKey),WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
+        return preferences.getInt(context.getString(R.string.prefLocationStatusKey), WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
     }
 
-    public static void resetLocationStatus(Context context){
+    public static void resetLocationStatus(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(context.getString(R.string.prefLocationStatusKey),WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
+        editor.putInt(context.getString(R.string.prefLocationStatusKey), WeatherSyncAdapter.LOCATION_STATUS_UNKNOWN);
         editor.apply();
     }
 }
