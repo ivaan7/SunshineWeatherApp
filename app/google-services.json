@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "735068011787",
+    "firebase_url": "https://sunshine-weather-app-a2bd0.firebaseio.com",
+    "project_id": "sunshine-weather-app-a2bd0",
+    "storage_bucket": "sunshine-weather-app-a2bd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735068011787:android:83b792e26f07bf18",
+        "android_client_info": {
+          "package_name": "com.example.android.sunshine.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735068011787-g98aorct1ta564ckcj7rvkhntuekedru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.sunshine.app",
+            "certificate_hash": "6d6c531da15498890b4cd9f4aef41c6eb840bd05"
+          }
+        },
+        {
+          "client_id": "735068011787-10jlh8fve2npao2tjt64nojoqgtdpgvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0wWPXDfg8g4EoIIecMWpE-patbAd1UMA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735068011787-10jlh8fve2npao2tjt64nojoqgtdpgvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
