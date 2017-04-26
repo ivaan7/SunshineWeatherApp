@@ -559,8 +559,8 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
                     // Define the text of the forecast.
                     String contentText = String.format(context.getString(R.string.format_notification),
                             desc,
-                            Utility.formatTemperature(context, high, isMetric),
-                            Utility.formatTemperature(context, low, isMetric));
+                            Utility.formatTemperature(context, high),
+                            Utility.formatTemperature(context, low));
 
                     //build notification
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
