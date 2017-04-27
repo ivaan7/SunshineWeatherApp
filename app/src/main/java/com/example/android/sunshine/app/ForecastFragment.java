@@ -120,7 +120,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        emptyView = (TextView) rootView.findViewById(R.id.empty_list_textview);
+        emptyView = (TextView) rootView.findViewById(R.id.listview_forecast_empty);
         listView.setEmptyView(emptyView);
         listView.setAdapter(adapter);
         // We'll call our MainActivity
@@ -282,7 +282,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     private void updateEmptyView() {
         if (adapter.getCount() == 0) {
-            TextView textView = (TextView) getView().findViewById(R.id.empty_list_textview);
+            TextView textView = (TextView) getView().findViewById(R.id.listview_forecast_empty);
             if (textView != null) {
                 int message = R.string.empty_forecast_list;
                 @WeatherSyncAdapter.LocationStatus int location = Utility.getLocationStatus(getActivity());
