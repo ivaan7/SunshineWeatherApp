@@ -1,4 +1,5 @@
 <resources>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -11,7 +12,6 @@
     <!-- Extra Padding -->
     <dimen name="detail_view_extra_padding">@dimen/abc_list_item_padding_horizontal_material</dimen>
 
-
     <dimen name="list_icon">40dp</dimen>
 
     <!-- Text Sizes - We are using DP here rather than SP because these are already large
@@ -23,5 +23,11 @@
       on devices that don't yet have Roboto -->
     <dimen name="forecast_text_width">49dp</dimen>
     <dimen name="forecast_temperature_space">8dp</dimen>
+
+    <!-- Needed if we aren't including the Material Design Library -->
+    <dimen name="appbar_elevation">4dp</dimen>
+
+    <!-- The amount we want the details view to overlap the app bar -->
+    <dimen name="details_app_bar_overlap">24dp</dimen>
 
 </resources>
