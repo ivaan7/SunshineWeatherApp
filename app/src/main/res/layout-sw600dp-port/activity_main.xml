@@ -53,5 +53,7 @@ flexibly place layouts all in the same drawing layer -->
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/weather_detail_container"
-        tools:layout="@android:layout/list_content" />
+        tools:layout="@android:layout/list_content"
+        android:choiceMode="singleChoice"
+        />
 </RelativeLayout>
