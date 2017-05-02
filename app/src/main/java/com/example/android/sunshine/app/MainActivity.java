@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.android.sunshine.app.sync.WeatherSyncAdapter;
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
 
     @Override
-    public void onItemSelected(Uri dateSelected) {
+    public void onItemSelected(Uri dateSelected,ForecastAdapter.ForecastAdapterViewHolder vh) {
         if (isTwoPane) {
             Bundle args = new Bundle();
             args.putParcelable(DetailFragment.DETAIL_URI, dateSelected);
@@ -106,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             Intent intent = new Intent(MainActivity.this, DetailActivity.class)
                     .setData(dateSelected);
             ActivityOptionsCompat activityOptions =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            new Pair<View, String>(vh.mIconView, getString(R.string.detail_icon_transition_name)));
             ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
         }
     }
