@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <!-- Permissions required to use the Place Picker -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <permission
         android:name="com.bosnjakovic.permission.WEATHER"
         android:icon="@mipmap/ic_launcher"
@@ -77,6 +80,9 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDBPVe1XsQGrQ3puH9Lyhb_5fB4ilNVk00"/>
     </application>
 
 </manifest>
