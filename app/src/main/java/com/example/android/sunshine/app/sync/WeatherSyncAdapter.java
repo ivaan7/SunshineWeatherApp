@@ -56,6 +56,8 @@ import java.util.concurrent.ExecutionException;
 public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = WeatherSyncAdapter.class.getSimpleName();
 
+    public static final String ACTION_DATA_UPDATED = "com.example.android.sunshine.app.ACTION_DATA_UPDATED";
+
     // Interval at which to sync with the weather, in milliseconds.
     // 60 seconds (1 minute)  180 = 3 hours
     public static final int SYNC_INTERVAL = 60 * 180;
@@ -365,6 +367,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
                 getContext().getContentResolver().delete(WeatherContract.WeatherEntry.CONTENT_URI,
                         WeatherContract.WeatherEntry.COLUMN_DATE + " <=? ", new String[]
                                 {Long.toString(dayTime.setJulianDay(julianStartDay - 1))});
+                updateWidgets();
                 notifyWeather();
             }
 
@@ -377,6 +380,14 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
             setLocationStatus(getContext(), LOCATION_STATUS_SERVER_INVALID);
         }
+    }
+
+    private void updateWidgets() {
+        Context context = getContext();
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     long addLocation(String locationSetting, String cityName, double lat, double lon) {
