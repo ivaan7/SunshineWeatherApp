@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-
 /**
  * The service which allows the sync adapter framework to access the authenticator.
  */
@@ -26,6 +25,7 @@ public class WeatherAuthenticatorService extends Service {
      * When the system binds to this Service to make the RPC call
      * return the authenticator's IBinder.
      */
+
     @Override
     public IBinder onBind(Intent intent) {
         return weatherAuthenticator.getIBinder();

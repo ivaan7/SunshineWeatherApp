@@ -51,9 +51,6 @@ import java.net.URL;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by Ivan on 5.3.2017..
- */
 public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = WeatherSyncAdapter.class.getSimpleName();
 
@@ -71,6 +68,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC
     };
+
     // these indices must match the projection
     private static final int INDEX_WEATHER_ID = 0;
     private static final int INDEX_MAX_TEMP = 1;
@@ -83,7 +81,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     //this annotations are used to check server status
     //every of possible server response is assigned in catch block when reciving server response
     //more on annotations here: https://developer.android.com/studio/write/annotations.html and
-    //here
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({LOCATION_STATUS_OK, LOCATION_STATUS_SERVER_DOWN, LOCATION_STATUS_SERVER_INVALID,
             LOCATION_STATUS_UNKNOWN, LOCATION_STATUS_INVALID})
@@ -141,9 +139,8 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
             // Instead of always building the query based off of the location string, we want to
             // potentially build a query using a lat/lon value. This will be the case when we are
             // syncing based off of a new location from the Place Picker API. So we need to check
-            // if we have a lat/lon to work with, and use those when we do. Otherwise, the weather
-            // service may not understand the location address provided by the Place Picker API
-            // and the user could end up with no weather! The horror!
+            // if we have a lat/lon to work with, and use those when we do.
+
             if (Utility.isLocationLatLonAvailable(context)) {
                 uriBuilder.appendQueryParameter(LAT_PARAM, locationLatitude)
                         .appendQueryParameter(LON_PARAM, locationLongitude);
@@ -169,7 +166,6 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                // Nothing to do.
                 return;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -188,17 +184,17 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
                 setLocationStatus(getContext(), LOCATION_STATUS_SERVER_DOWN);
                 return;
             }
+
             forecastJsonStr = buffer.toString();
             getWeatherDataFromJson(forecastJsonStr, locationQuery);
+
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the weather data, there's no point in attemping
             // to parse it.
             //setting status server down
             setLocationStatus(getContext(), LOCATION_STATUS_SERVER_DOWN);
             return;
         } catch (JSONException e) {
-            e.printStackTrace();
             //setting status invalid
             setLocationStatus(getContext(), LOCATION_STATUS_SERVER_INVALID);
         } finally {
@@ -209,7 +205,6 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
                 try {
                     reader.close();
                 } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
         }
@@ -220,10 +215,6 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     private void getWeatherDataFromJson(String forecastJsonStr,
                                         String locationSetting)
             throws JSONException {
-
-        // Now we have a String representing the complete forecast in JSON Format.
-        // Fortunately parsing is easy:  constructor takes the JSON string and converts it
-        // into an Object hierarchy for us.
 
         // These are the names of the JSON objects that need to be extracted.
 
@@ -254,7 +245,6 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
         final String OWM_WEATHER_ID = "id";
 
         final String OWM_MESSAGE_CODE = "code";
-
 
         try {
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
@@ -356,7 +346,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 cVVector.add(weatherValues);
             }
-            int inserted = 0;
+
             // add to database
             if (cVVector.size() > 0) {
                 ContentValues[] cvArray = new ContentValues[cVVector.size()];
@@ -444,9 +434,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /**
-     * Helper method to have the sync adapter sync immediately
-     *
-     * @param context The context used to access the account service
+     * Helper method to have the sync adapter sync immediately*
      */
     public static void syncImmediately(Context context) {
         Log.d("adapter", "onPerformSync Called.");
@@ -461,9 +449,6 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to get the fake account to be used with SyncAdapter, or make a new one
      * if the fake account doesn't exist yet.  If we make a new account, we call the
      * onAccountCreated method so we can initialize things.
-     *
-     * @param context The context used to access the account service
-     * @return a fake account.
      */
     public static Account getSyncAccount(Context context) {
         // Get an instance of the Android account manager
@@ -499,6 +484,7 @@ public class WeatherSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Helper method to schedule the sync adapter periodic execution
      */
+
     public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
         Account account = getSyncAccount(context);
         String authority = context.getString(R.string.content_authority);
