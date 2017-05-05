@@ -20,9 +20,11 @@ import com.example.android.sunshine.app.sync.WeatherSyncAdapter;
 /**
  * Provider for a scrollable weather detail widget
  */
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
         // Perform this loop procedure for each App Widget that belongs to this provider
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_detail);
@@ -66,10 +68,9 @@ public class DetailWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Sets the remote adapter used to fill in the list items
-     *
-     * @param views RemoteViews to set the RemoteAdapter
+     * Sets the remote adapter used to fill in the list items*
      */
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(R.id.widget_list,
@@ -77,10 +78,9 @@ public class DetailWidgetProvider extends AppWidgetProvider {
     }
 
     /**
-     * Sets the remote adapter used to fill in the list items
-     *
-     * @param views RemoteViews to set the RemoteAdapter
+     * Sets the remote adapter used to fill in the list items*
      */
+
     @SuppressWarnings("deprecation")
     private void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(0, R.id.widget_list,
