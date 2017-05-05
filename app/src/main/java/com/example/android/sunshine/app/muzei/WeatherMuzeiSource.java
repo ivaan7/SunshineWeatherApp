@@ -14,11 +14,13 @@ import com.google.android.apps.muzei.api.MuzeiArtSource;
 /**
  * Muzei source that changes your background based on the current weather conditions
  */
+
 public class WeatherMuzeiSource extends MuzeiArtSource {
     private static final String[] FORECAST_COLUMNS = new String[]{
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC
     };
+
     // these indices must match the projection
     private static final int INDEX_WEATHER_ID = 0;
     private static final int INDEX_SHORT_DESC = 1;
