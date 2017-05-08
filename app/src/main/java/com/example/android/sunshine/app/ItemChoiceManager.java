@@ -1,6 +1,5 @@
 package com.example.android.sunshine.app;
 
-
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.v4.util.LongSparseArray;
